@@ -1,0 +1,549 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:adm="http://github.com/adminfaces"
+                template="#{layoutMB.template}">
+
+
+    <ui:define name="metadata">
+        <f:metadata>
+            <f:viewParam name="bordeless" value="#{layoutMB.borderless}" converter="javax.faces.Boolean"/>
+        </f:metadata>
+        <ui:param name="enableSlideMenu" value="false"/> <!-- disables slide menu (only on this page) on small screens -->
+        <ui:param name="autoShowNavbar" value="false"/> <!-- disables auto show navbar (only on this page) on small devices -->
+        <style type="text/css">
+            .header-right.ui-datatable .ui-datatable-header {
+                text-align: right !important;
+            }
+
+            .ui-button-text-only .ui-button-text {
+                padding: 0.3em 0.4em;
+            }
+
+            .ui-selectcheckboxmenu-panel .ui-selectcheckboxmenu-header .ui-chkbox {
+                display: none;
+            }
+        </style>
+    </ui:define>
+    <ui:define name="title">
+        Datatable
+    </ui:define>
+
+    <ui:define name="description">
+        This page shows Primefaces datatable.
+    </ui:define>
+
+    <ui:define name="body">
+        <adm:breadcrumb title="Datatable"/>
+        <p:panel styleClass="card box-primary" header="Datatable">
+            <h:form prependId="false">
+                <div>
+                    <p:tooltip for="borderless" escape="false" position="top" value="Turns borderless tables on, just add &lt;code&gt;no-border&lt;/code&gt; class to all datatables."/>
+                    <p:outputLabel value="Borderless tables?" for="borderless"/>
+                    <p:inputSwitch id="borderless" value="#{layoutMB.borderless}">
+                        <p:ajax update="@this @(.ui-datatable, .ui-treetable)"/>
+                    </p:inputSwitch>
+                </div>
+                <p:spacer height="15px"/>
+
+                <div id="datatable">
+                    <p:dataTable var="car" value="#{datatableMB.cars}" widgetVar="carsTable" paginator="true" styleClass="header-right #{layoutMB.borderless ? 'no-border':''}"
+                                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                 rowsPerPageTemplate="5,10,15" rows="10" rowKey="#{car.id}"
+                                 emptyMessage="No cars found with given criteria" stickyHeader="true"
+                                 filteredValue="#{datatableMB.filteredCars}">
+
+                        <f:facet name="header">
+                            <p:outputPanel>
+                                <h:outputText value="Search all fields:"/>
+                                <p:spacer height="10"/>
+                                <p:inputText id="globalFilter" onkeyup="PF('carsTable').filter()" style="width:150px"
+                                             placeholder="Enter keyword"/>
+                            </p:outputPanel>
+                        </f:facet>
+
+                        <p:column width="5%" selectionMode="multiple"
+                                  styleClass="align-center"
+                                  priority="1"/>
+
+                        <p:column filterBy="#{car.id}" sortBy="#{car.id}" headerText="Id" footerText="contains"
+                                  filterMatchMode="contains" priority="1">
+                            <p:link value="#{car.id}" outcome="/index.xhtml">
+                                <f:param name="id" value="#{car.id}"/>
+                            </p:link>
+                        </p:column>
+
+                        <p:column filterBy="#{car.year}" sortBy="#{car.year}" headerText="Year" footerText="lte" filterMatchMode="lte"
+                                  priority="2">
+                            <f:facet name="filter">
+                                <p:calendar pattern="yyyy" showOn="both" yearRange="c-60:c+0" navigator="true">
+                                    <f:converter converterId="calendarYearConverter"/>
+                                    <p:ajax process="@this" event="change" oncomplete="PF('carsTable').filter()"/>
+                                    <p:ajax process="@this" event="dateSelect" oncomplete="PF('carsTable').filter()"/>
+                                </p:calendar>
+                            </f:facet>
+                            <h:outputText value="#{car.year}"/>
+                        </p:column>
+
+                        <p:column filterBy="#{car.brand}" headerText="Brand" footerText="exact" filterMatchMode="exact"
+                                  priority="2">
+                            <f:facet name="filter">
+                                <p:selectOneMenu onchange="PF('carsTable').filter()">
+                                    <f:selectItem itemLabel="Select One" itemValue="#{null}" noSelectionOption="true"/>
+                                    <f:selectItems value="#{datatableMB.brands}"/>
+                                </p:selectOneMenu>
+                            </f:facet>
+                            <h:outputText value="#{car.brand}"/>
+                        </p:column>
+
+                        <p:column filterBy="#{car.color}" headerText="Color" footerText="in" filterMatchMode="in"
+                                  priority="3">
+                            <f:facet name="filter">
+                                <p:selectCheckboxMenu label="Colors" onchange="PF('carsTable').filter()"
+                                                      panelStyle="width:125px" scrollHeight="150">
+                                    <f:selectItems value="#{datatableMB.colors}"/>
+                                </p:selectCheckboxMenu>
+                            </f:facet>
+                            <h:outputText value="#{car.color}"/>
+                        </p:column>
+
+                        <p:column filterBy="#{car.sold}" headerText="Status" footerText="equals"
+                                  filterMatchMode="equals"
+                                  priority="3">
+                            <f:facet name="filter">
+                                <p:selectOneButton onchange="PF('carsTable').filter()">
+                                    <f:converter converterId="javax.faces.Boolean"/>
+                                    <f:selectItem itemLabel="All" itemValue=""/>
+                                    <f:selectItem itemLabel="Sold" itemValue="true"/>
+                                    <f:selectItem itemLabel="Sale" itemValue="false"/>
+                                </p:selectOneButton>
+                            </f:facet>
+                            <h:outputText value="#{car.sold ? 'Sold': 'Sale'}"/>
+                        </p:column>
+
+                        <p:column filterBy="#{car.price}" headerText="Price" footerText="custom (min)"
+                                  filterFunction="#{datatableMB.filterByPrice}" priority="2">
+                            <h:outputText value="#{car.price}">
+                                <f:convertNumber currencySymbol="$" type="currency"/>
+                            </h:outputText>
+                        </p:column>
+                    </p:dataTable>
+                </div>
+                <p:spacer/>
+
+                <div id="datatable-single">
+                    <p:dataTable id="radioDT" var="car" value="#{datatableMB.cars}" paginator="true"
+                                 paginatorPosition="bottom" styleClass="#{layoutMB.borderless ? 'no-border':''}"
+                                 selection="#{datatableMB.selectedCar}" rowKey="#{car.id}" rows="5">
+                        <f:facet name="header">
+                            RadioButton
+                        </f:facet>
+                        <p:column selectionMode="single" style="width: 42px"
+                                  styleClass="align-center"
+                                  priority="1"/>
+
+                        <p:column headerText="Id" sortBy="#{car.id}" priority="1">
+                            <h:outputText value="#{car.id}" />
+                        </p:column>
+                        <p:column headerText="Year" priority="2">
+                            <h:outputText value="#{car.year}" />
+                        </p:column>
+                        <p:column headerText="Brand">
+                            <h:outputText value="#{car.brand}"/>
+                        </p:column>
+                        <p:column headerText="Color">
+                            <h:outputText value="#{car.color}"/>
+                        </p:column>
+                    </p:dataTable>
+                </div>
+
+            </h:form>
+        </p:panel>
+
+        <p:spacer/>
+        <p:panel header="Tree table" styleClass="card no-border" toggleable="true" toggleSpeed="300" >
+            <h:form>
+                <div id="treetable">
+                    <p:treeTable value="#{treeTableMB.root}" selectionMode="single" styleClass="#{layoutMB.borderless ? 'no-border':''}"
+                                 var="document" paginator="true" paginatorPosition="bottom" rows="2">
+                        <f:facet name="header">
+                            Document Viewer
+                        </f:facet>
+                        <p:column headerText="Name" sortBy="#{document.name}">
+                            <p:link value="#{document.name}" outcome="/index"/>
+                        </p:column>
+                        <p:column headerText="Size (p3)" priority="2">
+                            <h:outputText value="#{document.size}"/>
+                        </p:column>
+                        <p:column headerText="Type (p2)" priority="3">
+                            <h:outputText value="#{document.type}"/>
+                        </p:column>
+                        <p:column headerText="(p4)" priority="4">
+                            <p:commandLink process="@none" update="@none" oncomplete="alert('view detail')"
+                                           title="View Detail" styleClass="fa fa-search" style="text-decoration: none"/>
+                        </p:column>
+                    </p:treeTable>
+                </div>
+
+                <p:spacer/>
+                <div id="treetable-multiple">
+                    <p:treeTable value="#{treeTableMB.root}" selectionMode="checkbox"
+                                 selection="#{treeTableMB.selectedNodes}" styleClass="#{layoutMB.borderless ? 'no-border':''}"
+                                 var="document" paginator="true" paginatorPosition="bottom" rows="2">
+                        <f:facet name="header">
+                            Document Viewer (multiple selection)
+                        </f:facet>
+
+                        <p:column headerText="Name" sortBy="#{document.name}">
+                            <p:link value="#{document.name}" outcome="/index"/>
+                        </p:column>
+                        <p:column headerText="Size (p3)" priority="2">
+                            <h:outputText value="#{document.size}"/>
+                        </p:column>
+                        <p:column headerText="Type (p2)" priority="3">
+                            <h:outputText value="#{document.type}"/>
+                        </p:column>
+                        <p:column headerText="(p4)" priority="4">
+                            <p:commandLink process="@none" update="@none" oncomplete="alert('view detail')"
+                                           title="View Detail" styleClass="fa fa-search" style="text-decoration: none"/>
+                        </p:column>
+                    </p:treeTable>
+                </div>
+            </h:form>
+        </p:panel>
+
+        <p:spacer/>
+        <p:panel header="Editable" styleClass="card no-border" toggleable="true" toggleSpeed="300">
+            <h:form id="form">
+                <p:growl id="msgs" showDetail="true"/>
+
+                <p:dataTable id="cars1" var="car" value="#{datatableEditMB.cars1}" styleClass="#{layoutMB.borderless ? 'no-border':''}"
+                             editable="true" style="margin-bottom:20px">
+                    <f:facet name="header">
+                        Row Editing
+                    </f:facet>
+
+                    <p:ajax event="rowEdit" listener="#{datatableEditMB.onRowEdit}" update=":form:msgs" />
+                    <p:ajax event="rowEditCancel" listener="#{datatableEditMB.onRowCancel}" update=":form:msgs" />
+
+                    <p:column headerText="Id">
+                        <p:cellEditor>
+                            <f:facet name="output"><h:outputText value="#{car.id}" /></f:facet>
+                            <f:facet name="input"><p:inputText id="modelInput" value="#{car.id}"/></f:facet>
+                        </p:cellEditor>
+                    </p:column>
+
+                    <p:column headerText="Year">
+                        <p:cellEditor>
+                            <f:facet name="output"><h:outputText value="#{car.year}" /></f:facet>
+                            <f:facet name="input">
+                                <p:calendar value="#{car.year}" pattern="yyyy" showOn="both" yearRange="c-60:c+0" navigator="true" label="Year">
+                                    <f:converter converterId="calendarYearConverter"/>
+                                </p:calendar>
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+
+                    <p:column headerText="Brand">
+                        <p:cellEditor>
+                            <f:facet name="output"><h:outputText value="#{car.brand}" /></f:facet>
+                            <f:facet name="input">
+                                <p:selectOneMenu value="#{car.brand}">
+                                    <f:selectItems value="#{datatableEditMB.brands}" var="man" itemLabel="#{man}" itemValue="#{man}" />
+                                </p:selectOneMenu>
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+
+                    <p:column headerText="Color">
+                        <p:cellEditor>
+                            <f:facet name="output"><h:outputText value="#{car.color}" /></f:facet>
+                            <f:facet name="input">
+                                <p:selectOneMenu value="#{car.color}">
+                                    <f:selectItems value="#{datatableEditMB.colors}" var="color" itemLabel="#{color}" itemValue="#{color}" />
+                                </p:selectOneMenu>
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+
+                    <p:column style="width:40px">
+                        <p:rowEditor />
+                    </p:column>
+                </p:dataTable>
+
+                <p:dataTable id="cars2" var="car" value="#{datatableEditMB.cars2}" styleClass="#{layoutMB.borderless ? 'no-border':''}"
+                             editable="true" editMode="cell" widgetVar="cellCars">
+                    <f:facet name="header">
+                        Cell Editing with Click and RightClick
+                    </f:facet>
+
+                    <p:ajax event="cellEdit" listener="#{datatableEditMB.onCellEdit}" update=":form:msgs" />
+
+                    <p:column headerText="Id">
+                        <p:cellEditor>
+                            <f:facet name="output"><h:outputText value="#{car.id}" /></f:facet>
+                            <f:facet name="input"><p:inputText id="modelInput" value="#{car.id}"/></f:facet>
+                        </p:cellEditor>
+                    </p:column>
+
+                    <p:column headerText="Year">
+                        <p:cellEditor>
+                            <f:facet name="output"><h:outputText value="#{car.year}" /></f:facet>
+                            <f:facet name="input">
+                                <p:calendar value="#{car.year}" pattern="yyyy" showOn="both" yearRange="c-60:c+0" navigator="true" label="Year">
+                                    <f:converter converterId="calendarYearConverter"/>
+                                </p:calendar>
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+
+                    <p:column headerText="Brand">
+                        <p:cellEditor>
+                            <f:facet name="output"><h:outputText value="#{car.brand}" /></f:facet>
+                            <f:facet name="input">
+                                <p:selectOneMenu value="#{car.brand}">
+                                    <f:selectItems value="#{datatableEditMB.brands}" var="man" itemLabel="#{man}" itemValue="#{man}" />
+                                </p:selectOneMenu>
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+
+                    <p:column headerText="Color">
+                        <p:cellEditor>
+                            <f:facet name="output"><h:outputText value="#{car.color}" /></f:facet>
+                            <f:facet name="input">
+                                <p:selectOneMenu value="#{car.color}">
+                                    <f:selectItems value="#{datatableEditMB.colors}" var="color" itemLabel="#{color}" itemValue="#{color}" />
+                                </p:selectOneMenu>
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+                </p:dataTable>
+
+                <p:contextMenu for="cars2" widgetVar="cMenu">
+                    <p:menuitem value="Edit Cell" icon="fa fa-search" onclick="PF('cellCars').showCellEditor();return false;"/>
+                    <p:menuitem value="Hide Menu" icon="fa fa-close" onclick="PF('cMenu').hide()"/>
+                </p:contextMenu>
+
+            </h:form>
+        </p:panel>
+
+        <p:spacer/>
+        <p:panel header="Box colors" styleClass="card no-border" toggleable="true" toggleSpeed="300">
+            <div class="ui-g">
+                <div class="ui-g-6 ui-sm-12">
+                    <p:dataTable id="boxSolidTable" var="car" value="#{datatableMB.cars}" paginator="true" paginatorPosition="bottom"
+                                 styleClass="box-primary #{layoutMB.borderless ? 'no-border':''}"
+                                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                 rowsPerPageTemplate="5,10,15" rows="10"
+                                 emptyMessage="No cars found with given criteria"
+                                 >
+
+                        <f:facet name="header">
+                            <h:outputText value="Box primary table"/>
+                        </f:facet>
+
+                        <f:facet name="footer">
+                            <h:outputText value="Table footer"/>
+                        </f:facet>
+
+                        <p:column styleClass="align-center" headerText="Id"
+                                  priority="1">
+                            <h:outputText value="#{car.id}"/>
+                        </p:column>
+
+                        <p:column styleClass="align-center" headerText="Brand"
+                                  priority="2">
+                            <h:outputText value="#{car.brand}"/>
+                        </p:column>
+                    </p:dataTable>
+                </div>
+
+                <div class="ui-g-6 ui-sm-12">
+                    <p:dataTable id="boxTable" var="car" value="#{datatableMB.cars}" paginator="true" paginatorPosition="bottom"
+                                 styleClass="box-solid box-primary #{layoutMB.borderless ? 'no-border':''}"
+                                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                 rowsPerPageTemplate="5,10,15" rows="10"
+                                 emptyMessage="No cars found with given criteria"
+                                 >
+
+                        <f:facet name="header">
+                            <h:outputText value="Box solid primary table"/>
+                        </f:facet>
+
+                        <f:facet name="footer">
+                            <h:outputText value="Table footer"/>
+                        </f:facet>
+
+                        <p:column styleClass="align-center" headerText="Id"
+                                  priority="1">
+                            <h:outputText value="#{car.id}"/>
+                        </p:column>
+
+                        <p:column styleClass="align-center" headerText="Brand"
+                                  priority="2">
+                            <h:outputText value="#{car.brand}"/>
+                        </p:column>
+
+                    </p:dataTable>
+                </div>
+            </div>
+        </p:panel>
+
+        <p:spacer/>
+
+        <p:panel styleClass="card box-info" header="SubTable" toggleable="true" toggleSpeed="300">
+            <p:dataTable id="subtable" var="team" value="#{datatableMB.teams}" styleClass="header-right #{layoutMB.borderless ? 'no-border':''}">
+                <f:facet name="header">
+                    NBA Teams
+                </f:facet>
+
+                <p:columnGroup type="header">
+                    <p:row>
+                        <p:column rowspan="2" headerText="Team"/>
+                        <p:column colspan="2" headerText="Stats"/>
+                    </p:row>
+                    <p:row>
+                        <p:column headerText="Wins"/>
+                        <p:column headerText="Losses"/>
+                    </p:row>
+                </p:columnGroup>
+
+                <p:subTable var="stats" value="#{team.stats}">
+                    <f:facet name="header">
+                        <h:outputText value="#{team.name}"/>
+                    </f:facet>
+                    <p:column>
+                        <h:outputText value="#{stats.season}"/>
+                    </p:column>
+                    <p:column>
+                        <h:outputText value="#{stats.win}"/>
+                    </p:column>
+                    <p:column>
+                        <h:outputText value="#{stats.loss}"/>
+                    </p:column>
+                    <p:columnGroup type="footer">
+                        <p:row>
+                            <p:column footerText="Totals: " style="text-align:right"/>
+                            <p:column footerText="#{team.allWins}"/>
+                            <p:column footerText="#{team.allLosses}"/>
+                        </p:row>
+                    </p:columnGroup>
+                </p:subTable>
+            </p:dataTable>
+        </p:panel>
+        <p:separator/>
+        <p:panel styleClass="card no-border" header="Row grouping" id="rowGroupPanel" toggleable="true" toggleSpeed="300">
+            <h:form>
+                <p:dataTable var="car" widgetVar="rowGroupTable" value="#{datatableMB.cars}" sortBy="#{car.brand}" expandableRowGroups="true" styleClass="#{layoutMB.borderless ? 'no-border':''}">
+                    <p:headerRow>
+                        <p:column colspan="3" sortBy="#{car.brand}">
+                            <h:outputText value="#{car.brand}" />
+                        </p:column>
+                    </p:headerRow>
+                    <p:column headerText="Year" sortBy="#{car.year}">
+                        <h:outputText value="#{car.year}" />
+                    </p:column>
+                    <p:column headerText="Color" sortBy="#{car.color}" filterBy="#{car.color}" filterFunction="#{datatableMB.filterByColor}">
+                        <f:facet name="filter">
+                            <p:selectCheckboxMenu multiple="true" filter="true" value="#{datatableMB.selectedColors}" filterMatchMode="contains">
+                                <f:selectItems value="#{datatableMB.colors}" var="c" itemLabel="#{c}" itemValue="#{c}"/>
+                                <p:ajax event="change" oncomplete="PF('rowGroupTable').filter()" update="rowGroupPanel"/>
+                            </p:selectCheckboxMenu>
+                        </f:facet>
+                        <h:outputText value="#{car.color}" />
+                    </p:column>
+                    <p:column headerText="Id">
+                        <h:outputText value="#{car.id}" />
+                    </p:column>
+                    <p:summaryRow>
+                        <p:column colspan="2" style="text-align:right">
+                            <h:outputText value="Total:" />
+                        </p:column>
+                        <p:column>
+                            <h:outputText value="#{datatableMB.randomPrice}">
+                                <f:convertNumber type="currency" currencySymbol="$" />
+                            </h:outputText>
+                        </p:column>
+                    </p:summaryRow>
+                </p:dataTable>
+            </h:form>
+        </p:panel>
+        <p:separator/>
+        <p:panel styleClass="card no-border" header="Row expansion" id="rowExpansionPanel" toggleable="true" toggleSpeed="300" selection="#{datatableMB.selectedCar}">
+            <p:dataTable var="car" value="#{datatableMB.cars}" styleClass="#{layoutMB.borderless ? 'no-border':''}" rowKey="#{car.id}" selectionMode="single">
+                <f:facet name="header">
+                    Expand rows to see detailed information
+                </f:facet>
+                <p:column style="width:30px">
+                    <p:rowToggler />
+                </p:column>
+                <p:column headerText="Id" sortBy="#{car.id}">
+                    <h:outputText value="#{car.id}" />
+                </p:column>
+                <p:column headerText="Year">
+                    <h:outputText value="#{car.year}" />
+                </p:column>
+                <p:rowExpansion>
+                    <p:panelGrid  columns="2" style="width:300px" styleClass="ui-panelgrid-blank">
+                        <f:facet name="header">
+                            <p:graphicImage name="demo/images/car/#{car.brand}-big.gif"/>
+                        </f:facet>
+                        <p:outputLabel for="id" value="Id:" />
+                        <h:outputText id="id" value="#{car.id}" />
+                        <p:outputLabel for="year"  value="Year" />
+                        <h:outputText id="year" value="#{car.year}" />
+                        <p:outputLabel for="color"  value="Color:" />
+                        <h:outputText id="color" value="#{car.color}" style="color:#{car.color}"/>
+                        <p:outputLabel for="price"  value="Price" />
+                        <h:outputText id="price" value="$#{car.price}" />
+                    </p:panelGrid>
+                </p:rowExpansion>
+            </p:dataTable>
+        </p:panel>
+    </ui:define>
+
+    <ui:define name="code">
+        <p:tabView styleClass="hidden-sm hidden-xs">
+            <p:tab title="datatable.xhtml">
+                <pre>
+               <code class="language-html"><h:outputText
+                       value="#{sourceCodeMB.getPageSource()}" escape="true"/>
+               </code>
+                </pre>
+            </p:tab>
+
+            <p:tab title="DatatableMB.java">
+                <pre>
+               <code class="language-java">
+                   <h:outputText
+                           value="#{sourceCodeMB.getJavaSource('com.github.adminfaces.showcase.bean.DatatableMB')}"
+                           escape="false"/>
+               </code>
+                </pre>
+            </p:tab>
+        </p:tabView>
+
+        <p:accordionPanel styleClass="hidden-md hidden-lg no-icon">
+            <p:tab title="datatable.xhtml">
+                <pre>
+               <code class="language-html"><h:outputText
+                       value="#{sourceCodeMB.getPageSource()}" escape="true"/>
+               </code>
+                </pre>
+            </p:tab>
+
+            <p:tab title="DatatableMB.java">
+                <pre>
+               <code class="language-java">
+                   <h:outputText
+                           value="#{sourceCodeMB.getJavaSource('com.github.adminfaces.showcase.bean.DatatableMB')}"
+                           escape="false"/>
+               </code>
+                </pre>
+            </p:tab>
+        </p:accordionPanel>
+    </ui:define>
+</ui:composition>

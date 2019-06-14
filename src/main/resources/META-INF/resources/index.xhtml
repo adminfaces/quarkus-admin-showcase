@@ -1,0 +1,97 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                template="#{layoutMB.template}">
+
+    <ui:define name="metadata">
+        <ui:param name="renderBreadCrumb" value="false"/>
+    </ui:define>
+
+    <ui:define name="title">
+        <div class="pull-right hidden-xs">
+            <a href="https://adminfaces.github.io/site/" target="_blank">
+                <h:graphicImage library="images" name="logo.png" height="100" width="100"/>
+            </a>
+        </div>
+        <h2 class="align-center">
+            Welcome to the <span class="text-aqua"> <i><a href="https://adminfaces.github.io/site/" target="_blank"
+                                                          style="text-transform: none;text-decoration: none"> AdminFaces</a></i></span> Showcase!
+            <br/>
+            <small>Integrating <p:link value="Primefaces" href="http://primefaces.org"/>, <p:link value="Bootstrap"
+                                                                                                  href="http://getbootstrap.com/"/> and
+                <p:link value="Admin LTE" href="https://adminlte.io/themes/AdminLTE/"/> into your
+                <p:link value="JSF" href="https://javaserverfaces.java.net/"/> application.
+            </small>
+        </h2>
+    </ui:define>
+
+
+    <ui:define name="body">
+        <div class="box box-primary" style="font-family: 'Helvetica Neue';font-size: 15px">
+            <div class="box-header with-border">
+                <a href="https://adminfaces.github.io/site/" target="_blank"><b>AdminFaces</b></a> is composed by the following projects:
+            </div>
+            <div class="box-body">
+                <ul>
+                    <li>
+                        <p:link value="Admin Theme" href="https://github.com/adminfaces/admin-theme"/>: Is a <i><p:link
+                                value="Primefaces theme" href="http://primefaces.org/themes"/> </i> based on <p:link
+                            value="Bootstrap" href="http://getbootstrap.com"/> and <p:link value=" Admin LTE"
+                            href="https://adminlte.io/themes/AdminLTE/"/> where PrimeFaces components are customized to look like mentioned frameworks.
+                    </li>
+                    <li>
+                        <p:link value="Admin Template" href="https://github.com/adminfaces/admin-template"/>: It's a
+                        <b>fully responsive</b> <i> <p:link value="Java Server Faces"
+                                                            href="https://javaserverfaces.java.net/"/> </i>
+                        <code>admin</code> template (used by this Showcase) which is also based on <b>Bootstrap</b> and
+                        <b>Admin LTE</b>.
+                    </li>
+                    <li>
+                        <p:link value="Admin Showcase"
+                                href="https://github.com/adminfaces/admin-showcase"/>: This web application which demonstrates AdminFaces main features and components.
+                    </li>
+                    <li>
+                        <p:link value="Admin Designer"
+                                href="https://github.com/adminfaces/admin-designer"/>: It's the same showcase application with Admin Theme and Admin Template bundled in order to make it easier to customize the theme and the template.
+                    </li>
+                    <li>
+                        <p:link value="Admin Starter"
+                                href="https://github.com/adminfaces/admin-starter"/>: A simple starter project to get you started with AdminFaces.
+                    </li>
+                    <li>
+                        <p:link value="Admin Persistence"
+                                href="https://github.com/adminfaces/admin-persistence"/>: CRUD operations like a breeze for AdminFaces applications based on <p:link href="https://deltaspike.apache.org/" value="Apache DeltaSpike" target="_blank"/> Data module.
+                    </li>
+                    <li>
+                        <p:link value="Admin Starter SpringBoot"
+                                href="https://github.com/adminfaces/admin-starter-springboot"/>: Admin Starter application based on SpringBoot and JoinFaces.
+                    </li>
+                    <li>
+                         <p:link value="Admin Addon"
+                                 href="https://github.com/adminfaces/admin-addon"/>: Enables <code>scaffold from entities</code> (and much more) for AdminFaces applicatons.
+                    </li>
+                    <li>
+                        <p:link value="Admin Mobile"
+                                href="https://github.com/adminfaces/admin-mobile"/>: Admin showcase mobile application using Android webview.
+                    </li>
+
+                    <li>
+                        <p:link value="Admin Docs"
+                                href="https://github.com/adminfaces/docs"/>: Holds AdminFaces documentation.
+                    </li>
+                    <li>
+                        <p:link value="Admin Site"
+                                href="https://github.com/adminfaces/site"/>:  <a href="https://adminfaces.github.io/site/" target="_blank">AdminFaces site</a> which gathers information about all projects.
+                    </li>
+                    <li>
+                        <p:link value="Admin Blog"
+                                href="https://github.com/adminfaces/blog"/>:  <a href="https://adminfaces.github.io/blog/" target="_blank">AdminFaces blog</a>, used for AdminFaces announcements and tips.
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <ui:include src="pages/dashboard/dashboard.xhtml"/>
+    </ui:define>
+</ui:composition>

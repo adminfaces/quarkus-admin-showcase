@@ -1,0 +1,222 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:adm="http://github.com/adminfaces"
+                template="#{layoutMB.template}">
+
+
+
+    <ui:define name="head-end">
+        <style type="text/css">
+            div.ui-material {
+                margin-top: 20px;
+            }
+
+            input:-webkit-autofill {
+                -webkit-box-shadow: 0 0 0 30px white inset;
+            }
+
+
+        </style>
+    </ui:define>
+
+    <ui:define name="title">
+        Material inputs
+    </ui:define>
+
+    <ui:define name="description">
+        This page shows how to apply <p:link value="material design"
+                                             href="https://material.io/guidelines/components/text-fields.html"
+                                             target="_blank"/> style to input components.
+    </ui:define>
+    <ui:define name="body">
+        <adm:breadcrumb title="Material inputs"/>
+        <p:panel styleClass="card no-border" header="Material inputs">
+            <p:tooltip/>
+
+            <div class="callout-card callout-info">
+                <h4>
+                    <span class="glyphicon glyphicon-info-sign"/>
+                </h4>
+                <p>Material design inputs must be surrounded by a <code>div</code> with class
+                    <code>ui-material</code> and its label must be placed <span
+                            style="font-weight:bold;text-decoration: underline">after the input</span>.</p>
+            </div>
+
+            <h:form>
+                <div class="ui-g ui-fluid">
+
+                    <div class="ui-g-6 ui-sm-12">
+                        <div class="ui-material">
+                            <p:inputText id="input" required="true" placeholder="Material placeholder"/>
+                            <p:outputLabel for="input" value="Material input"/>
+                            <p:message for="input"/>
+                        </div>
+                    </div>
+
+                    <div class="ui-g-6 ui-sm-12">
+                        <div class="ui-material no-float">
+                            <p:inputText id="input-no-float" required="true" placeholder="Material without floating label"/>
+                            <p:message for="input-no-float"/>
+                        </div>
+                    </div>
+
+                    <div class="ui-g-6 ui-sm-12">
+                        <div class="ui-material">
+                            <p:inputText id="disabled" value="pre filled value" disabled="true" />
+                            <p:outputLabel for="disabled" value="Material input disabled"/>
+                            <p:message for="disabled"/>
+                        </div>
+                    </div>
+                    <div class="ui-g-6 ui-sm-12">
+                        <div class="ui-material">
+                            <p:selectOneMenu id="select" value="#{userLoginMB.selected}" required="true">
+                                <f:selectItem itemLabel="Select"/>
+                                <f:selectItem itemLabel="Credit Card" itemValue="Credit Card"/>
+                                <f:selectItem itemLabel="Deposit" itemValue="Deposit"/>
+                                <f:selectItem itemLabel="Cash" itemValue="Cash"/>
+                            </p:selectOneMenu>
+                            <p:outputLabel for="select" value="Material select"/>
+                            <p:message for="select"/>
+                        </div>
+                    </div>
+
+                    <div class="ui-g-6 ui-sm-12">
+                        <div class="ui-material">
+                            <p:autoComplete id="autocomplete" completeMethod="#{autoCompleteMB.completeText}"
+                                            placeholder="Autocomplete placeholder"
+                                            dropdown="true" required="true"/>
+                            <p:outputLabel for="autocomplete" value="Material autocomplete"/>
+                            <p:message for="autocomplete"/>
+                        </div>
+                    </div>
+
+                    <div class="ui-g-6 ui-sm-12">
+                        <div class="ui-material">
+                            <p:calendar id="material-calendar" showOn="both" placeholder="Calendar placeholder"
+                                        required="true">
+                                <p:ajax event="dateSelect" global="false" onstart="adminMaterial()"/>
+                            </p:calendar>
+                            <p:outputLabel for="material-calendar" value="Material calendar"/>
+                            <p:message for="material-calendar"/>
+                        </div>
+                    </div>
+
+                    <div class="ui-g-6 ui-sm-12">
+                        <div class="ui-material">
+                            <p:password id="password" placeholder="Password placeholder" required="true">
+                                <i class="fa fa-2x fa-lock"/>
+                            </p:password>
+                            <p:outputLabel for="password" value="Material password"/>
+                            <p:message for="password"/>
+                        </div>
+                    </div>
+
+                    <div class="ui-g-6 ui-sm-12">
+                        <div class="ui-material">
+                            <p:inputTextarea id="textarea" placeholder="Textarea placeholder" required="true"/>
+                            <p:outputLabel for="textarea" value="Material textarea"/>
+                            <p:message for="textarea"/>
+                        </div>
+                    </div>
+
+                    <div class="ui-g-6 ui-sm-12">
+                        <div class="ui-material">
+                            <p:selectCheckboxMenu id="chkmenu" label="Cities" required="true"
+                                                  multiple="true" filter="true" filterMatchMode="startsWith">
+                                <f:selectItems value="#{checkboxMB.cities}"/>
+                            </p:selectCheckboxMenu>
+                            <p:outputLabel for="chkmenu" value="Material checkbox menu"/>
+                            <p:message for="chkmenu"/>
+                        </div>
+                    </div>
+
+                    <div class="ui-g-6 ui-sm-12">
+                        <div class="ui-material">
+                            <p:inputText id="icon" required="true" placeholder="Material placeholder">
+                                <i class="fa fa-2x fa-user-circle"/>
+                            </p:inputText>
+                            <p:outputLabel for="icon" value="Material input with icon"/>
+                            <p:message for="icon"/>
+                        </div>
+                    </div>
+
+                    <div class="ui-g-6 ui-sm-12">
+                        <div class="ui-material icon-left">
+                            <p:inputText id="user-icon" required="true" placeholder="Icon left">
+                                <i id="fa" class="fa fa-2x fa-user"/>
+                            </p:inputText>
+                            <p:outputLabel id="label" for="user-icon" value="Icon left"/>
+                            <p:message for="user-icon"/>
+                        </div>
+                    </div>
+
+                    <div class="ui-g-6 ui-sm-12">
+                        <div class="ui-material icon-left">
+                            <p:calendar id="material-calendar-left" showOn="both" placeholder="Icon left calendar"
+                                        required="true">
+                                <p:ajax event="dateSelect" global="false" onstart="adminMaterial()"/>
+                            </p:calendar>
+                            <p:outputLabel for="material-calendar-left" value="Icon left calendar"/>
+                            <p:message for="material-calendar-left"/>
+                        </div>
+                    </div>
+
+                    <div class="ui-g-12">
+                        <div class="ui-material">
+                            <p:keyboard id="keyboard" placeholder="keyboard" required="true"/>
+                            <p:outputLabel for="keyboard" value="Keyboard"/>
+                            <p:message for="keyboard"/>
+                        </div>
+                    </div>
+
+                    <div class="ui-g-12">
+                        <p:commandButton id="submitButton" styleClass="btn-primary" value="Submit" update="@form"
+                                         ignoreAutoUpdate="true"/>
+                    </div>
+                </div>
+            </h:form>
+
+        </p:panel>
+        <div class="callout-card callout-danger" style="margin-top: 30px">
+            <p>Note that <code>p:calendar</code> needs to call a javascript on date select event, that is needed
+                because Primefaces doesn't trigger any javascript event on date select and we use javascript (adminMaterial function) to make the label
+                <code>float</code>
+                when element value is not empty.</p>
+            <p>This will not be needed when <a
+                    href="https://github.com/primefaces/primefaces/issues/2304">this issue</a> is fixed.</p>
+        </div>
+
+
+        <div class="callout-card callout-warning" style="margin-top: 30px">
+            <p>Material inputs depend on <code>Admin Template javascript to work</code>, so if you use <b>admin-theme</b> without template you must add <a style="font-weight: bold" href="https://github.com/adminfaces/admin-template/blob/master/src/main/resources/META-INF/resources/js/admintemplate.js">admintemplate.js</a> in you application</p>
+        </div>
+    </ui:define>
+
+    <ui:define name="code">
+        <p:tabView styleClass="hidden-sm hidden-xs">
+            <p:tab title="inputs.xhtml">
+           <pre>
+               <code class="language-html">
+                   <h:outputText value="#{sourceCodeMB.getPageSource()}" escape="true"/>
+               </code>
+           </pre>
+            </p:tab>
+
+        </p:tabView>
+
+        <p:accordionPanel styleClass="hidden-md hidden-lg no-icon">
+            <p:tab title="inputs.xhtml">
+           <pre>
+               <code class="language-html">
+                   <h:outputText value="#{sourceCodeMB.getPageSource()}" escape="true"/>
+               </code>
+           </pre>
+            </p:tab>
+
+        </p:accordionPanel>
+
+    </ui:define>
+</ui:composition>

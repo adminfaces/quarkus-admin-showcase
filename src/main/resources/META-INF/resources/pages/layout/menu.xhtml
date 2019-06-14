@@ -1,0 +1,168 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:adm="http://github.com/adminfaces"
+                xmlns:h="http://java.sun.com/jsf/html"
+                template="#{layoutMB.template}">
+
+
+    <ui:define name="title">
+        Showcase menu
+    </ui:define>
+
+    <ui:define name="description">
+        This page desmonstrates showcase menu and top bar code
+    </ui:define>
+
+    <ui:define name="center-header">
+        <h2>AdminFaces Showcase Application</h2>
+    </ui:define>
+
+    <ui:define name="body">
+        <adm:breadcrumb title="Menu" clear="true"/>
+        <div class="box box-primary">
+            <div class="box-header with-border" style="min-height: 150px">
+                <p style="padding: 20px">The menu is <code>defined</code> via facelets templating by *extending* <a
+                        href="https://github.com/adminfaces/admin-template/blob/master/src/main/resources/META-INF/resources/admin.xhtml">Admin Template.</a>
+                </p>
+
+                <div class="alert alert-info alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                    <h4><i class="icon fa fa-info"></i>Note</h4>
+                    Menu itens are activated (class <code>active</code>) based on current url and menu <code>href</code>.
+                </div>
+
+                <div class="alert alert-success alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                    <h4><i class="icon fa fa-info"></i>Note</h4>
+                    To use <b>horizontal menu</b> layout use <code>admin-top.xhtml</code> template.
+                </div>
+
+                <div class="alert alert-warning alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                    <h4><i class="icon fa fa-info"></i>Note</h4>
+                    To use <b>central title</b> on top bar (as in this page) just define
+                    <code>center-header</code> on you page or template.
+
+                    <hr/>
+                    <div class="callout callout-success">
+                        <h4>Tip!</h4>
+                        <p>You can customize central title by using a <b>css overide</b> on class
+                            <code>center-navbar</code>:</p>
+                        <pre class="language-html"><code>
+.body .center-navbar {
+  color: red;
+}
+                        </code></pre>
+                    </div>
+
+                    <div class="callout callout-danger">
+                        <h4>Important!</h4>
+                        <p>Center title is <b>hidden on mobile</b> (small screens).</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </ui:define>
+
+
+    <ui:define name="code">
+        <p:tabView styleClass="hidden-sm hidden-xs">
+
+            <p:tab title="pages/layout/menu.xhtml">
+           <pre>
+               <code class="language-html"><h:outputText value="#{sourceCodeMB.getPageSource('pages/layout/menu')}"
+                                                         escape="true"/>
+ </code>
+           </pre>
+            </p:tab>
+
+            <p:tab title="WEB-INF/templates/template.xhtml (default layout)">
+           <pre>
+               <code class="language-html"><h:outputText
+                       value="#{sourceCodeMB.getPageSource('WEB-INF/templates/template.xhtml')}" escape="true"/></code>
+           </pre>
+            </p:tab>
+            <p:tab title="WEB-INF/templates/template-top.xhtml (horizontal menu layout)">
+           <pre>
+               <code class="language-html"><h:outputText
+                       value="#{sourceCodeMB.getPageSource('WEB-INF/templates/template-top.xhtml')}"
+                       escape="true"/></code>
+           </pre>
+            </p:tab>
+            <p:tab title="includes/menu.xhtml">
+           <pre>
+               <code class="language-html">
+<h:outputText value="#{sourceCodeMB.getPageSource('includes/menu')}" escape="true"/>
+                </code>
+           </pre>
+            </p:tab>
+
+            <p:tab title="top-menu.xhtml">
+           <pre>
+               <code class="language-html"><h:outputText value="#{sourceCodeMB.getPageSource('includes/top-menu')}"
+                                                         escape="true"/>
+ </code>
+           </pre>
+            </p:tab>
+
+            <p:tab title="/includes/menubar.xhtml (used by Horizontal menu layout)">
+           <pre>
+               <code class="language-html"><h:outputText value="#{sourceCodeMB.getPageSource('includes/menubar')}"
+                                                         escape="true"/>
+ </code>
+           </pre>
+            </p:tab>
+
+        </p:tabView>
+
+        <p:accordionPanel styleClass="hidden-md hidden-lg no-icon">
+
+            <p:tab title="pages/layout/menu.xhtml">
+           <pre>
+               <code class="language-html"><h:outputText value="#{sourceCodeMB.getPageSource('pages/layout/menu')}"
+                                                         escape="true"/>
+ </code>
+           </pre>
+            </p:tab>
+           <p:tab title="WEB-INF/templates/template.xhtml (default layout)">
+           <pre>
+               <code class="language-html"><h:outputText
+                       value="#{sourceCodeMB.getPageSource('WEB-INF/templates/template.xhtml')}" escape="true"/></code>
+           </pre>
+            </p:tab>
+            <p:tab title="WEB-INF/templates/template-top.xhtml (horizontal menu layout)">
+           <pre>
+               <code class="language-html"><h:outputText
+                       value="#{sourceCodeMB.getPageSource('WEB-INF/templates/template-top.xhtml')}"
+                       escape="true"/></code>
+           </pre>
+            </p:tab>
+            <p:tab title="includes/menu.xhtml">
+           <pre>
+               <code class="language-html">
+<h:outputText value="#{sourceCodeMB.getPageSource('includes/menu')}" escape="true"/>
+                </code>
+           </pre>
+            </p:tab>
+
+            <p:tab title="top-menu.xhtml">
+           <pre>
+               <code class="language-html"><h:outputText value="#{sourceCodeMB.getPageSource('includes/top-menu')}"
+                                                         escape="true"/>
+ </code>
+           </pre>
+            </p:tab>
+
+            <p:tab title="/includes/menubar.xhtml (used by Horizontal menu layout)">
+           <pre>
+               <code class="language-html"><h:outputText value="#{sourceCodeMB.getPageSource('includes/menubar')}"
+                                                         escape="true"/>
+ </code>
+           </pre>
+            </p:tab>
+
+        </p:accordionPanel>
+    </ui:define>
+</ui:composition>

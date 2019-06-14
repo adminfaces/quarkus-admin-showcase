@@ -1,0 +1,82 @@
+= Quarkus AdminFaces Starter
+:page-layout: base
+:source-language: java
+:icons: font
+:linkattrs:
+:sectanchors:
+:sectlink:
+:numbered:
+:doctype: book
+:toc: preamble
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+
+This project is based/depends on https://github.com/tandraschko/quarkus-myfaces[quarkus-myfaces^] and https://github.com/rmpestano/quarkus-omnifaces[quarkus-omnifaces^] extensions.
+
+The same https://github.com/adminfaces[AdminFaces showcase^] application running on https://quarkus.io/[Quarkus^].
+
+NOTE: Only hotspot was tested and native mode will probably not work.
+ 
+== How to try it?
+
+=== Build MyFaces 
+
+* clone https://github.com/apache/myfaces.git 
+* `mvn versions:set -DnewVersion=3.0.0-M1 -DprocessAllModules` (NOTE: we need to update the version to M1 as Quarkus does _NOT_ support snapshots)
+* `mvn clean install -DskipTests`
+
+=== Build quarkus-myfaces
+
+* `git clone https://github.com/tandraschko/quarkus-myfaces && cd quarkus-myfaces/quarkus-myfaces && mvn clean install`
+ 
+[TIP]
+====
+
+To build the quarkus extension you need to add jboss maven repository to your maven settings.xml:
+
+----
+<repositories>
+    <repository>
+        <id>jboss</id>
+        <name>jboss repo</name>
+        <url>https://repository.jboss.org/nexus/content/groups/public-jboss/</url>
+    </repository>
+</repositories>
+<pluginRepositories>
+    <pluginRepository>
+        <id>jboss</id>
+        <name>jboss repo</name>
+        <url>https://repository.jboss.org/nexus/content/groups/public-jboss/</url>
+   </pluginRepository>
+</pluginRepositories>
+----
+
+====
+
+=== Build quarkus-omnifaces
+
+Before building quarkus-omnifaces you need to install OmniFaces 3.4 (not released yet):
+
+`git clone https://github.com/omnifaces/omnifaces && mvn versions:set -DnewVersion=3.4 && mvn clean install -DskipTests`
+
+then build quarkus-omnifaces extension:
+
+`git clone https://github.com/rmpestano/quarkus-omnifaces && mvn clean install`
+
+=== Run Admin showcase
+
+Finally run this project: 
+
+* `git clone https://github.com/adminfaces/quarkus-admin-showcase && cd quarkus-admin-showcase && mvn compile quarkus:dev`
+* access http://localhost:8080/
+
+TIP: Run via quarkus runner with `mvn clean package && java -jar target/quarkus-admin-showcase-runner.jar`
+
+== Docker
+
+to run via docker execute the following commands:
+
+* `mvn clean package && docker build -f docker/Dockerfile.jvm -t quarkus/full-jvm . && docker run -i --rm -p 8080:8080 quarkus/full-jvm`
