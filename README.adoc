@@ -1,4 +1,4 @@
-= Quarkus AdminFaces Starter
+= Quarkus AdminFaces Showcase
 :page-layout: base
 :source-language: java
 :icons: font
