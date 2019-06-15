@@ -1,10 +1,13 @@
 package com.github.adminfaces.showcase.bean;
 
+import org.apache.commons.io.IOUtils;
+
 import javax.enterprise.context.ApplicationScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.servlet.ServletContext;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.HashMap;
@@ -59,9 +62,8 @@ public class SourceCodeMB {
         if(!sourcePath.endsWith(sulfix)){
             sourcePath = sourcePath +sulfix;
         }
-        String realPath =((ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext()).getRealPath(basePath + sourcePath);
-        try {
-            return new String(Files.readAllBytes(Paths.get(realPath)));
+        try (InputStream is = ((ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext()).getResourceAsStream(basePath + sourcePath)){
+            return new String(IOUtils.toByteArray(is));
         } catch (IOException e) {
             e.printStackTrace();
         }
