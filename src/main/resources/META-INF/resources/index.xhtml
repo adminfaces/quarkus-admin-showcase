@@ -5,7 +5,11 @@
                 template="#{layoutMB.template}">
 
     <ui:define name="metadata">
-        <ui:param name="renderBreadCrumb" value="false"/>
+       <style type="text/css">
+           ol.breadcrumb {
+               display: none;
+           }
+       </style>
     </ui:define>
 
     <ui:define name="title">

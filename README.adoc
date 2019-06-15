@@ -79,4 +79,8 @@ TIP: Run via quarkus runner with `mvn clean package && java -jar target/quarkus-
 
 to run via docker execute the following commands:
 
-* `mvn clean package && docker build -f docker/Dockerfile.jvm -t quarkus/full-jvm . && docker run -i --rm -p 8080:8080 quarkus/full-jvm`
+* `mvn clean package && docker build -f docker/Dockerfile -t rmpestano/quarkus-admin-showcase . && docker run -i --rm -p 8080:8080 rmpestano/quarkus-admin-showcase`
+
+OR run already pushed image:
+
+* `docker run -i --rm -p 8080:8080 rmpestano/quarkus-admin-showcase`

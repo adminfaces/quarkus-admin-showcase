@@ -4,6 +4,7 @@ import com.github.adminfaces.showcase.analytics.model.PageStats;
 import com.github.adminfaces.showcase.analytics.model.PageView;
 import com.github.adminfaces.showcase.analytics.model.PageViewCountry;
 import com.github.adminfaces.showcase.filter.BlackListFilter;
+import com.github.adminfaces.showcase.model.StringWrapper;
 import org.apache.commons.io.FileUtils;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.DefaultStreamedContent;
@@ -14,6 +15,9 @@ import org.slf4j.LoggerFactory;
 import javax.annotation.PostConstruct;
 import javax.ejb.Schedule;
 import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
+import javax.enterprise.inject.Produces;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
@@ -49,12 +53,14 @@ public class PageStatisticsStore implements Serializable {
     private List<Integer> yearsWithStatistics;
     private List<PageStats> pageStatsFilteredByDate;
     private StreamedContent pageStatsFile;
+    private Calendar statisticsCollectedSince;
 
 
     @PostConstruct
     public void initStatistics() {
         pageStatisticsMap = new ConcurrentHashMap<>();
         log.info("Using {} as page statistics file store.", pagesStatsFilePath);
+        statisticsCollectedSince = Calendar.getInstance();
         try {
             File statisticsFile = new File(pagesStatsFilePath);
             if (!statisticsFile.exists()) {
@@ -103,6 +109,11 @@ public class PageStatisticsStore implements Serializable {
             log.info("Finished reading page statistics store.");
         }
     }
+
+    public Calendar getStatisticsCollectedSince() {
+        return statisticsCollectedSince;
+    }
+
 
     private boolean considerDate(String date) {
         if (!has(date)) {
@@ -541,5 +552,19 @@ public class PageStatisticsStore implements Serializable {
 
     public StreamedContent getPageStatsFile() {
         return pageStatsFile;
+    }
+
+    @Produces
+    @RequestScoped
+    @Named("now")
+    public Date now() {
+        return new Date();
+    }
+
+    @Produces
+    @SessionScoped
+    @Named("hostname")
+    public StringWrapper hostname() {
+        return new StringWrapper(System.getenv("HOSTNAME"));
     }
 }

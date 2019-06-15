@@ -6,13 +6,14 @@
 #
 # Then, build the image with:
 #
-# docker build -f src/main/docker/Dockerfile.jvm -t quarkus/full-jvm .
+# docker build -f docker/Dockerfile -t rmpestano/quarkus-admin-showcase .
 #
 # Then run the container using:
 #
-# docker run -i --rm -p 8080:8080 quarkus/full-jvm
+# docker run -i --rm -p 8080:8080 rmpestano/quarkus-admin-showcase
 #
 FROM fabric8/java-alpine-openjdk8-jre
 COPY target/lib/* /deployments/lib/
 COPY target/*-runner.jar /deployments/app.jar
+RUN export JAVA_OPTIONS="$JAVA_OPTIONS -Xmx64m -Xms64m"
 ENTRYPOINT [ "/deployments/run-java.sh" ]

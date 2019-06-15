@@ -8,17 +8,20 @@ import java.util.EnumSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import static com.github.adminfaces.template.util.Assert.has;
+
 @WebListener
 public class StartupListener implements ServletContextListener {
 
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
+        String viewsInSession = has(System.getenv("ViewsInSession")) ? System.getenv("ViewsInSession") : "3";
         sce.getServletContext().setInitParameter("primefaces.THEME", "admin-1.0.2");
         sce.getServletContext().setInitParameter("primefaces.FONT_AWESOME", "true");
-        sce.getServletContext().setInitParameter("com.sun.faces.numberOfLogicalViews", "6");
-        sce.getServletContext().setInitParameter("com.sun.faces.numberOfViewsInSession", "6");
-        sce.getServletContext().setInitParameter("org.omnifaces.VIEW_SCOPE_MANAGER_MAX_ACTIVE_VIEW_SCOPES", "6");
+        sce.getServletContext().setInitParameter("com.sun.faces.numberOfLogicalViews",viewsInSession) ;
+        sce.getServletContext().setInitParameter("com.sun.faces.numberOfViewsInSession", viewsInSession);
+        sce.getServletContext().setInitParameter("org.omnifaces.VIEW_SCOPE_MANAGER_MAX_ACTIVE_VIEW_SCOPES", viewsInSession);
         try {
             sce.getServletContext().createListener(SessionListener.class);
         } catch (ServletException e) {

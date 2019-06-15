@@ -2,6 +2,8 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:p="http://primefaces.org/ui"
+                xmlns:of="http://omnifaces.org/functions"
+                xmlns:fn="http://java.sun.com/jsp/jstl/functions"
                 xmlns:adm="http://github.com/adminfaces" xmlns:f="http://xmlns.jcp.org/jsf/core"
                 template="#{layoutMB.template}">
 
@@ -116,10 +118,11 @@
     </ui:define>
 
     <ui:define name="description">
-        Showcase visitors statistics <h:outputLabel style="font-weight: bold" id="info"><i
+        Showcase visitors statistics <h:outputLabel style="font-weight: bold;color: #3c8dbc" id="info"><i
             class="fa fa2x fa-info-circle"/></h:outputLabel>
         <p:tooltip for="info" showEvent="mouseover" hideEvent="mouseleave"
-                   value="Statistics are updated on every hour."/>
+                   value="S\Page statistics collected since #{of:formatDate(pageStatisticsStore.statisticsCollectedSince.time, adminConfig.dateFormat)} (#{fn:substring(adminConfig.dateFormat,0 ,10)} - #{pageStatisticsStore.statisticsCollectedSince.timeZone.displayName})"/>
+
     </ui:define>
 
     <ui:define name="body">
@@ -138,12 +141,6 @@
                     <p:inputText id="statsDate" styleClass="statsDate" readonly="true" placeholder="Click to select month"
                                  style="cursor: pointer" value="#{analyticsMB.monthYearSelection}"/>
                     <p:spacer width="5"/>
-                    <p:commandButton value="All times" action="#{analyticsMB.updateStatistics}" style="font-size: 16px"
-                                     update="@(.ui-panel, .analyticsScripts, .statsDate)" styleClass="btn-danger" global="false"
-                                     process="@this"
-                                     oncomplete="initStats()">
-                        <p:confirm header="Confirmation" message="Load ALL times statistics?" icon="ui-icon-alert"/>
-                    </p:commandButton>
                 </div>
             </div>
 
