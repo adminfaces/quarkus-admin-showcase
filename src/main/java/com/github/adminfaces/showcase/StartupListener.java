@@ -31,8 +31,10 @@ public class StartupListener implements ServletContextListener {
         gzipResponseFilter.setInitParameter("threshold", "200");
         gzipResponseFilter.addMappingForServletNames(EnumSet.of(DispatcherType.ERROR), true, "Faces Servlet");
         FilterRegistration.Dynamic javaMelodyFilter = sce.getServletContext().addFilter("javamelody", "net.bull.javamelody.MonitoringFilter");
-        javaMelodyFilter.addMappingForUrlPatterns(EnumSet.of(DispatcherType.REQUEST), true, "/*");
-        javaMelodyFilter.setAsyncSupported(true);
+        if(javaMelodyFilter != null) { //sometimes when running via java -jar it is null
+            javaMelodyFilter.addMappingForUrlPatterns(EnumSet.of(DispatcherType.REQUEST), true, "/*");
+            javaMelodyFilter.setAsyncSupported(true);
+        }
         sce.getServletContext().setSessionTrackingModes(EnumSet.of(SessionTrackingMode.COOKIE));
     }
 
