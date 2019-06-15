@@ -33,6 +33,7 @@ public class StartupListener implements ServletContextListener {
         FilterRegistration.Dynamic javaMelodyFilter = sce.getServletContext().addFilter("javamelody", "net.bull.javamelody.MonitoringFilter");
         javaMelodyFilter.addMappingForUrlPatterns(EnumSet.of(DispatcherType.REQUEST), true, "/*");
         javaMelodyFilter.setAsyncSupported(true);
+        sce.getServletContext().setSessionTrackingModes(EnumSet.of(SessionTrackingMode.COOKIE));
     }
 
 
