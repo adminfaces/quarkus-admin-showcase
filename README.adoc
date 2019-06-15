@@ -84,3 +84,7 @@ to run via docker execute the following commands:
 OR run already pushed image:
 
 * `docker run -i --rm -p 8080:8080 rmpestano/quarkus-admin-showcase`
+
+== Demo
+
+The application is deployed on openshift and available here: https://quarkus-admin-quarkus-admin.apps.us-west-2.online-starter.openshift.com/
