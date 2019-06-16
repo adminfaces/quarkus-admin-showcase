@@ -87,4 +87,4 @@ OR run already pushed image:
 
 == Demo
 
-The application is deployed on openshift and available here: https://quarkus-admin-quarkus-admin.apps.us-west-2.online-starter.openshift.com/
+The application is deployed on openshift and available here: https://showcase-quarkus-admin.apps.us-west-2.online-starter.openshift.com/
