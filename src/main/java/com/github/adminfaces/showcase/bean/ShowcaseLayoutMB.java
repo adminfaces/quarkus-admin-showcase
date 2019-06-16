@@ -6,14 +6,18 @@
 package com.github.adminfaces.showcase.bean;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.Priority;
 import javax.enterprise.context.SessionScoped;
-import javax.enterprise.inject.Specializes;
+import javax.enterprise.inject.Alternative;
+import javax.inject.Named;
 
 /**
  *
  * @author rmpestano
  */
-@Specializes
+@Named("layoutMB")
+@Alternative
+@Priority(1)
 @SessionScoped
 public class ShowcaseLayoutMB extends com.github.adminfaces.template.bean.LayoutMB {
     
