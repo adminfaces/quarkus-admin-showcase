@@ -13,7 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.PostConstruct;
-import javax.ejb.Schedule;
+import io.quarkus.scheduler.Scheduled;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
@@ -143,7 +143,7 @@ public class PageStatisticsStore implements Serializable {
         pageStats.addPageView(pageView);
     }
 
-    @Schedule(hour = "*/1", persistent = false)
+    @Scheduled(every="60m")
     public void persistPageStatistics() {
         if (pageStatisticsMap == null || pageStatisticsMap.isEmpty()) {
             return;//in some situation the schedule is called before statistics is initialized
@@ -215,7 +215,7 @@ public class PageStatisticsStore implements Serializable {
         return pageStatsJson != null && pageStatsJson.length() > 1024 * 1024;
     }
 
-    @Schedule(hour = "*/6", minute = "15", persistent = false)
+    @Scheduled(every="280m")
     public void calculatePageViews() {
         List<PageStats> pageStatsCopy = null;
         synchronized (pageStatisticsMap) {
