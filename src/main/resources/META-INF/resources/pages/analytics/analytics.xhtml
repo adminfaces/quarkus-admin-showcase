@@ -121,7 +121,7 @@
         Showcase visitors statistics <h:outputLabel style="font-weight: bold;color: #3c8dbc" id="info"><i
             class="fa fa2x fa-info-circle"/></h:outputLabel>
         <p:tooltip for="info" showEvent="mouseover" hideEvent="mouseleave"
-                   value="S\Page statistics collected since #{of:formatDate(pageStatisticsStore.statisticsCollectedSince.time, adminConfig.dateFormat)} (#{fn:substring(adminConfig.dateFormat,0 ,10)} - #{pageStatisticsStore.statisticsCollectedSince.timeZone.displayName})"/>
+                   value="Page statistics collected since #{of:formatDate(pageStatisticsStore.statisticsCollectedSince.time, adminConfig.dateFormat)} (#{fn:substring(adminConfig.dateFormat,0 ,10)} - #{pageStatisticsStore.statisticsCollectedSince.timeZone.displayName})"/>
 
     </ui:define>
 
