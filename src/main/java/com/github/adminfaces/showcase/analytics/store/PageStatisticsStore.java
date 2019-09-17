@@ -5,6 +5,7 @@ import com.github.adminfaces.showcase.analytics.model.PageView;
 import com.github.adminfaces.showcase.analytics.model.PageViewCountry;
 import com.github.adminfaces.showcase.filter.BlackListFilter;
 import com.github.adminfaces.showcase.model.StringWrapper;
+import io.quarkus.scheduler.Scheduled;
 import org.apache.commons.io.FileUtils;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.DefaultStreamedContent;
@@ -13,7 +14,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.PostConstruct;
-import io.quarkus.scheduler.Scheduled;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;

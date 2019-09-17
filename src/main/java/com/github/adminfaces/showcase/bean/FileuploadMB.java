@@ -3,11 +3,13 @@ package com.github.adminfaces.showcase.bean;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
 
-import javax.enterprise.inject.Model;
+import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.inject.Named;
 
-@Model
+@Named
+@RequestScoped
 public class FileuploadMB {
 
     private UploadedFile file;
