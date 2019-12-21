@@ -10,6 +10,7 @@
 
     <properties>
         <quarkus.version>0.21.1</quarkus.version>
+        <adminfaces.version>1.1.0</adminfaces.version>
         <failsafe.version>2.22.0</failsafe.version>
         <surefire.version>2.22.0</surefire.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -48,7 +49,7 @@
         <dependency>
             <groupId>com.github.adminfaces</groupId>
             <artifactId>admin-template</artifactId>
-            <version>1.0.2</version>
+            <version>${adminfaces.version}</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.omnifaces</groupId>
@@ -63,7 +64,7 @@
         <dependency>
             <groupId>com.github.adminfaces</groupId>
             <artifactId>admin-theme</artifactId>
-            <version>1.0.2</version>
+            <version>${adminfaces.version}</version>
             <classifier>no-cache</classifier>
         </dependency>
          <dependency>
