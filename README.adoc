@@ -24,7 +24,10 @@ NOTE: Only hotspot was tested and native mode will probably not work.
 
 === Build MyFaces 
 
-* clone https://github.com/apache/myfaces.git
+Following steps will be need while `MyFaces 3.x` is not released:
+
+* `git clone clone https://github.com/apache/myfaces.git`
+* `mvn versions:set -DnewVersion=3.0.0-SNAPSHOT -DprocessAllModules`
 * `mvn clean install -DskipTests`
 
 === Build quarkus-myfaces
@@ -57,12 +60,6 @@ To build the quarkus extension you need to add jboss maven repository to your ma
 
 === Build quarkus-omnifaces
 
-Before building quarkus-omnifaces you need to install OmniFaces 3.4 (not released yet):
-
-`git clone https://github.com/omnifaces/omnifaces && mvn versions:set -DnewVersion=3.4 && mvn clean install -DskipTests`
-
-then build quarkus-omnifaces extension:
-
 `git clone https://github.com/rmpestano/quarkus-omnifaces && mvn clean install`
 
 === Run Admin showcase
@@ -86,4 +83,4 @@ OR run already pushed image:
 
 == Demo
 
-The application is deployed on openshift and available here: https://showcase-quarkus-admin.apps.us-west-2.online-starter.openshift.com/
+The application is deployed on openshift and available here: https://adminfaces.github.io/admin-showcase

@@ -18,7 +18,7 @@
         <adm:breadcrumb title="Schedule"/>
         <h:form>
             <div class="row">
-                <p:growl id="messages" showDetail="true" life="3000"/>
+                <p:growl id="messages" showDetail="true" life="3000" escape="false"/>
                 <p:schedule id="schedule" value="#{scheduleMB.eventModel}" widgetVar="myschedule" timeZone="GMT+2">
 
                     <p:ajax event="dateSelect" listener="#{scheduleMB.onDateSelect}" update="eventDetails"
@@ -53,7 +53,7 @@
                             <p:commandButton type="reset" value="Reset" styleClass="btn-success"/>
                             <p:spacer height="5"/>
                             <p:commandButton id="addButton" value="Save" styleClass="btn-primary"
-                                             actionListener="#{scheduleMB.addEvent}"
+                                             actionListener="#{scheduleMB.addEvent}" update="messages"
                                              oncomplete="PF('myschedule').update();PF('eventDialog').hide();"/>
                         </div>
                     </f:facet>

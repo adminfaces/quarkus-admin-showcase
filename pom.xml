@@ -9,7 +9,7 @@
     <name>Quarkus - AdminFaces - Showcase</name>
 
     <properties>
-        <quarkus.version>0.21.1</quarkus.version>
+        <quarkus.version>1.0.1.Final</quarkus.version>
         <adminfaces.version>1.1.0</adminfaces.version>
         <failsafe.version>2.22.0</failsafe.version>
         <surefire.version>2.22.0</surefire.version>
@@ -44,7 +44,7 @@
         <dependency>
             <groupId>org.primefaces</groupId>
             <artifactId>primefaces</artifactId>
-            <version>7.0</version>
+            <version>8.0.RC2</version>
         </dependency>
         <dependency>
             <groupId>com.github.adminfaces</groupId>
@@ -65,7 +65,6 @@
             <groupId>com.github.adminfaces</groupId>
             <artifactId>admin-theme</artifactId>
             <version>${adminfaces.version}</version>
-            <classifier>no-cache</classifier>
         </dependency>
          <dependency>
             <groupId>org.primefaces.extensions</groupId>
@@ -106,6 +105,11 @@
             <groupId>net.bull.javamelody</groupId>
             <artifactId>javamelody-core</artifactId>
             <version>1.59.0</version>
+        </dependency>
+        <dependency>
+            <groupId>jakarta.xml.bind</groupId> <!-- java 11 support -->
+            <artifactId>jakarta.xml.bind-api</artifactId>
+            <version>2.3.2</version>
         </dependency>
     </dependencies>
 
@@ -158,4 +162,12 @@
             </plugin>
         </plugins>
     </build>
+    <repositories>
+        <repository>
+            <id>prime-repo</id>
+            <name>PrimeFaces Maven Repository</name>
+            <url>http://repository.primefaces.org</url>
+            <layout>default</layout>
+        </repository>
+    </repositories>
 </project>

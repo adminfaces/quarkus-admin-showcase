@@ -16,11 +16,11 @@ public class StartupListener implements ServletContextListener {
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
+        sce.getServletContext().setInitParameter("primefaces.THEME", "admin");
         String viewsInSession = has(System.getenv("ViewsInSession")) ? System.getenv("ViewsInSession") : "3";
         sce.getServletContext().setInitParameter("com.sun.faces.numberOfLogicalViews",viewsInSession) ;
         sce.getServletContext().setInitParameter("com.sun.faces.numberOfViewsInSession", viewsInSession);
         sce.getServletContext().setInitParameter("org.omnifaces.VIEW_SCOPE_MANAGER_MAX_ACTIVE_VIEW_SCOPES", viewsInSession);
-        sce.getServletContext().setInitParameter("primefaces.THEME", "admin-1.1.0");
         try {
             sce.getServletContext().createListener(SessionListener.class);
         } catch (ServletException e) {
