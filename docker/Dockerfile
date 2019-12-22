@@ -12,8 +12,8 @@
 #
 # docker run -i --rm -p 8080:8080 rmpestano/quarkus-admin-showcase
 #
-FROM fabric8/java-alpine-openjdk8-jre
+FROM fabric8/java-alpine-openjdk11-jre
 COPY target/lib/* /deployments/lib/
 COPY target/*-runner.jar /deployments/app.jar
-RUN export JAVA_OPTIONS="$JAVA_OPTIONS -Xmx64m -Xms64m"
+RUN export JAVA_OPTIONS="$JAVA_OPTIONS -Xmx128m -Xms128m"
 ENTRYPOINT [ "/deployments/run-java.sh" ]
