@@ -10,14 +10,14 @@
     <name>Quarkus - AdminFaces - Showcase</name>
 
     <properties>
-        <quarkus.version>1.0.1.Final</quarkus.version>
+        <quarkus.version>1.1.0.Final</quarkus.version>
         <adminfaces.version>1.1.0</adminfaces.version>
         <primefaces.version>8.0.RC2</primefaces.version>
         <failsafe.version>2.22.0</failsafe.version>
         <surefire.version>2.22.0</surefire.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
     </properties>
 
     <dependencyManagement>
@@ -33,11 +33,6 @@
     </dependencyManagement>
 
     <dependencies>
-        <dependency>
-            <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-myfaces</artifactId>
-            <version>${quarkus.version}</version>
-        </dependency>
         <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-omnifaces</artifactId>
