@@ -10,9 +10,9 @@
     <name>Quarkus - AdminFaces - Showcase</name>
 
     <properties>
-        <quarkus.version>1.1.0.Final</quarkus.version>
+        <quarkus.version>1.2.1.Final</quarkus.version>
         <adminfaces.version>1.1.0</adminfaces.version>
-        <primefaces.version>8.0.RC2</primefaces.version>
+        <primefaces.version>8.0</primefaces.version>
         <failsafe.version>2.22.0</failsafe.version>
         <surefire.version>2.22.0</surefire.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

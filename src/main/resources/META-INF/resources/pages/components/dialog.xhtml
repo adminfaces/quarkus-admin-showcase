@@ -171,8 +171,7 @@
         <p:dialog header="Login" widgetVar="dlgLogin" resizable="false" draggable="false" appendTo="@(body)" responsive="true" width="450"
                   modal="true" styleClass="dialog-login">
             <h:form>
-                <p:growl/>
-                <p:messages closable="true"/>
+                <p:growl sticky="true"/>
                 <p:panelGrid id="loginGrid" columns="2" cellpadding="5" layout="grid" styleClass="no-border ui-fluid">
                     <p:outputLabel for="username" value="Username:"/>
                     <p:inputText id="username" value="#{userLoginMB.username}" required="true" autocomplete="off"
@@ -201,7 +200,7 @@
 
                 <p:separator/>
                 <p:button styleClass="btn-material pull-left" value="Close" onclick="PF('dlgLogin').hide();return false"/>
-                <p:commandButton styleClass="btn-primary btn-material pull-right" value="Login" update="@(.ui-growl, div[id$=loginGrid])"
+                <p:commandButton styleClass="btn-primary btn-material pull-right" value="Login" update="@form"
                                  action="#{userLoginMB.login()}" process="@form"
                                  ignoreAutoUpdate="true"
                                  oncomplete="handleLoginRequest(xhr, status, args)"/> 
@@ -234,6 +233,10 @@
             
             body .ui-dialog.ui-widget-content.dlg3 {
                 z-index:1033!important;
+            }
+
+            body div.ui-growl {
+                left: initial;
             }
         </style>
     </ui:define>

@@ -62,14 +62,13 @@ public class UserLoginMB implements Serializable {
         FacesMessage message = null;
         boolean loggedIn = false;
 
-        if (username != null && username.equals("admin") && password != null && password.equals("admin")) {
+        if ("admin".equals(username) && "admin".equals(password)) {
             loggedIn = true;
             message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Welcome", username);
         } else {
             loggedIn = false;
             message = new FacesMessage(FacesMessage.SEVERITY_WARN, "Loggin Error", "Invalid credentials");
         }
-
         FacesContext.getCurrentInstance().addMessage(null, message);
         context.ajax().addCallbackParam("loggedIn", loggedIn);
     }
