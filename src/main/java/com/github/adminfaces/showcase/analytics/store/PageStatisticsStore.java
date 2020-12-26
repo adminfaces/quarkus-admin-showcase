@@ -554,12 +554,6 @@ public class PageStatisticsStore implements Serializable {
         return pageStatsFile;
     }
 
-    @Produces
-    @RequestScoped
-    @Named("now")
-    public Date now() {
-        return new Date();
-    }
 
     @Produces
     @SessionScoped

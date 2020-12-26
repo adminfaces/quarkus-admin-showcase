@@ -10,7 +10,7 @@
     <name>Quarkus - AdminFaces - Showcase</name>
 
     <properties>
-        <quarkus.version>1.2.1.Final</quarkus.version>
+        <quarkus.version>1.7.6.Final</quarkus.version>
         <adminfaces.version>1.1.0</adminfaces.version>
         <primefaces.version>8.0</primefaces.version>
         <failsafe.version>2.22.0</failsafe.version>
@@ -36,7 +36,7 @@
         <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-omnifaces</artifactId>
-            <version>${quarkus.version}</version>
+            <version>1.0.0-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>org.primefaces</groupId>
@@ -66,7 +66,7 @@
         <dependency>
             <groupId>org.primefaces.extensions</groupId>
             <artifactId>primefaces-extensions</artifactId>
-            <version>6.1.1</version>
+            <version>8.0.4</version>
             <!-- only for gravatar-->
         </dependency>
         <dependency>
