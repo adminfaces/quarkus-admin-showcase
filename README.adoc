@@ -14,30 +14,24 @@
 :caution-caption: :fire:
 :warning-caption: :warning:
 
-This project depends on https://github.com/apache/myfaces/tree/master/extensions/quarkus[quarkus-myfaces^] and https://github.com/rmpestano/quarkus-omnifaces[quarkus-omnifaces^] extensions.
 
 This repo is the same https://github.com/adminfaces[AdminFaces showcase^] application but running on https://quarkus.io/[Quarkus^].
 
 NOTE: Only hotspot is supported.
  
-== How to try it?
 
-=== Build quarkus-omnifaces
+== Running Admin showcase
 
-`git clone https://github.com/rmpestano/quarkus-omnifaces && mvn clean install`
-
-=== Run Admin showcase
-
-Run this project:
+=== Via Maven
 
 * `git clone https://github.com/adminfaces/quarkus-admin-showcase && cd quarkus-admin-showcase && mvn compile quarkus:dev`
 * access http://localhost:8080/
 
-TIP: Run via quarkus runner with `mvn clean package && java -jar target/quarkus-admin-showcase-runner.jar`
+=== Via Java
 
-== Docker
+`mvn clean package && java -jar target/quarkus-admin-showcase-runner.jar`
 
-to run via docker execute the following commands:
+=== Via Docker
 
 * `mvn clean package && docker build -f docker/Dockerfile -t rmpestano/quarkus-admin-showcase . && docker run -i --rm -p 8080:8080 rmpestano/quarkus-admin-showcase`
 
@@ -47,4 +41,4 @@ OR run already pushed image:
 
 == Demo
 
-The application is deployed on openshift and available here: https://adminfaces.github.io/admin-showcase
+https://adminfaces.github.io/admin-showcase
