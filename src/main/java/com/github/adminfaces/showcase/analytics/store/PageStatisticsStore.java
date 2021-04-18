@@ -104,7 +104,7 @@ public class PageStatisticsStore implements Serializable {
                 pageStatisticsMap.put(pageStats.getViewId(), pageStats);
             }
         } catch (Exception e) {
-            log.warn("Could not load page statistics "+e.getMessage());
+            log.warn("Could not load page statistics " + e.getMessage());
         } finally {
             log.info("Finished reading page statistics store.");
         }
@@ -143,7 +143,7 @@ public class PageStatisticsStore implements Serializable {
         pageStats.addPageView(pageView);
     }
 
-    @Scheduled(every="60m")
+    @Scheduled(every = "60m")
     public void persistPageStatistics() {
         if (pageStatisticsMap == null || pageStatisticsMap.isEmpty()) {
             return;//in some situation the schedule is called before statistics is initialized
@@ -215,7 +215,7 @@ public class PageStatisticsStore implements Serializable {
         return pageStatsJson != null && pageStatsJson.length() > 1024 * 1024;
     }
 
-    @Scheduled(every="280m")
+    @Scheduled(every = "280m")
     public void calculatePageViews() {
         List<PageStats> pageStatsCopy = null;
         synchronized (pageStatisticsMap) {
@@ -547,7 +547,8 @@ public class PageStatisticsStore implements Serializable {
 
     public void prepareDownload() throws FileNotFoundException {
         InputStream stream = new FileInputStream(new File(pagesStatsFilePath));
-        pageStatsFile = new DefaultStreamedContent(stream, "application/json", "page-stats.json");
+        pageStatsFile = DefaultStreamedContent.builder().stream(() -> stream)
+                .contentEncoding("application/json").name("page-stats.json").build();
     }
 
     public StreamedContent getPageStatsFile() {

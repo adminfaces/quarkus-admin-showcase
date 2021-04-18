@@ -11,8 +11,8 @@
 
     <properties>
         <quarkus.version>1.7.6.Final</quarkus.version>
-        <adminfaces.version>1.1.0</adminfaces.version>
-        <primefaces.version>8.0</primefaces.version>
+        <adminfaces.version>1.2.0</adminfaces.version>
+        <primefaces.version>10.0.0</primefaces.version>
         <failsafe.version>2.22.0</failsafe.version>
         <surefire.version>2.22.0</surefire.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -36,7 +36,7 @@
         <dependency>
             <groupId>com.github.adminfaces</groupId>
             <artifactId>quarkus-omnifaces</artifactId>
-            <version>1.0.1</version>
+            <version>1.3.0</version>
         </dependency>
         <dependency>
             <groupId>org.primefaces</groupId>
