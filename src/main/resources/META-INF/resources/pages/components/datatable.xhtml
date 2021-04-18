@@ -410,7 +410,6 @@
                         <p:column headerText="Losses"/>
                     </p:row>
                 </p:columnGroup>
-
                 <p:subTable var="stats" value="#{team.stats}">
                     <f:facet name="header">
                         <h:outputText value="#{team.name}"/>
@@ -438,7 +437,7 @@
         <p:panel styleClass="card no-border" header="Row grouping" id="rowGroupPanel" toggleable="true" toggleSpeed="300">
             <h:form>
                 <p:dataTable var="car" widgetVar="rowGroupTable" value="#{datatableMB.cars}" sortBy="#{car.brand}" expandableRowGroups="true" styleClass="#{layoutMB.borderless ? 'no-border':''}">
-                    <p:headerRow>
+                    <p:headerRow field="brand">
                         <p:column colspan="3" sortBy="#{car.brand}">
                             <h:outputText value="#{car.brand}" />
                         </p:column>
