@@ -3,6 +3,7 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
                 template="#{layoutMB.template}">
     
     <ui:param name="title" value="Dialog"/> <!-- will be used for bradCrumb and page title -->
@@ -15,6 +16,7 @@
     <ui:define name="body">
 
         <h:form>
+            <p:tooltip/>
             <div class="row ui-fluid">
                 <div class="col-md-3 col-sm-12">
                     <p:commandButton value="Basic" type="button" onclick="PF('dlg1').show();" styleClass="btn-success"/>
@@ -174,7 +176,7 @@
                 <p:growl sticky="true"/>
                 <p:panelGrid id="loginGrid" columns="2" cellpadding="5" layout="grid" styleClass="no-border ui-fluid">
                     <p:outputLabel for="username" value="Username:"/>
-                    <p:inputText id="username" value="#{userLoginMB.username}" required="true" autocomplete="off"
+                    <p:inputText id="username" pt:data-tooltip="Provide username" value="#{userLoginMB.username}" required="true" autocomplete="off"
                                  requiredMessage="Username is required." label="username"/>
                     <p:outputLabel for="password" value="Password:"/>
                     <p:password id="password" value="#{userLoginMB.password}" required="true"
