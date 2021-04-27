@@ -5,14 +5,13 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:adm="http://github.com/adminfaces"
                 template="#{layoutMB.template}">
-
+    <ui:param name="enableSlideMenu" value="false"/> <!-- disables slide menu (only on this page) on small screens -->
+    <ui:param name="autoShowNavbar" value="false"/> <!-- disables auto show navbar (only on this page) on small devices -->
 
     <ui:define name="metadata">
         <f:metadata>
             <f:viewParam name="bordeless" value="#{layoutMB.borderless}" converter="javax.faces.Boolean"/>
         </f:metadata>
-        <ui:param name="enableSlideMenu" value="false"/> <!-- disables slide menu (only on this page) on small screens -->
-        <ui:param name="autoShowNavbar" value="false"/> <!-- disables auto show navbar (only on this page) on small devices -->
         <style type="text/css">
             .header-right.ui-datatable .ui-datatable-header {
                 text-align: right !important;
@@ -471,8 +470,9 @@
             </h:form>
         </p:panel>
         <p:separator/>
-        <p:panel styleClass="card no-border" header="Row expansion" id="rowExpansionPanel" toggleable="true" toggleSpeed="300" selection="#{datatableMB.selectedCar}">
-            <p:dataTable var="car" value="#{datatableMB.cars}" styleClass="#{layoutMB.borderless ? 'no-border':''}" rowKey="#{car.id}" selectionMode="single">
+        <p:panel styleClass="card no-border" header="Row expansion" id="rowExpansionPanel" toggleable="true" toggleSpeed="300" >
+            <p:dataTable var="car" value="#{datatableMB.cars}" styleClass="#{layoutMB.borderless ? 'no-border':''}"
+                         rowKey="#{car.id}" selectionMode="single">
                 <f:facet name="header">
                     Expand rows to see detailed information
                 </f:facet>
@@ -500,6 +500,27 @@
                         <h:outputText id="price" value="$#{car.price}" />
                     </p:panelGrid>
                 </p:rowExpansion>
+            </p:dataTable>
+        </p:panel>
+        <p:panel styleClass="card no-border" header="Scrollable" toggleable="true" toggleSpeed="300">
+
+            <p:dataTable var="car" value="#{datatableMB.cars}" paginator="false" scrollHeight="200" scrollable="true"
+                         styleClass="#{layoutMB.borderless ? 'no-border':''}">
+                <f:facet name="header">
+                    Scrollable
+                </f:facet>
+                <p:column headerText="Id" sortBy="#{car.id}" priority="1">
+                    <h:outputText value="#{car.id}"/>
+                </p:column>
+                <p:column headerText="Year" priority="2">
+                    <h:outputText value="#{car.year}"/>
+                </p:column>
+                <p:column headerText="Brand">
+                    <h:outputText value="#{car.brand}"/>
+                </p:column>
+                <p:column headerText="Color">
+                    <h:outputText value="#{car.color}"/>
+                </p:column>
             </p:dataTable>
         </p:panel>
     </ui:define>
