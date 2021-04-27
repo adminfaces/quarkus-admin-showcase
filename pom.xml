@@ -11,7 +11,7 @@
 
     <properties>
         <quarkus.version>1.12.2.Final</quarkus.version>
-        <adminfaces.version>1.2.0</adminfaces.version>
+        <adminfaces.version>1.3.0</adminfaces.version>
         <primefaces.version>10.0.0</primefaces.version>
         <failsafe.version>2.22.0</failsafe.version>
         <surefire.version>2.22.0</surefire.version>
@@ -61,7 +61,7 @@
         <dependency>
             <groupId>com.github.adminfaces</groupId>
             <artifactId>admin-theme</artifactId>
-            <version>1.2.1-SNAPSHOT</version>
+            <version>${adminfaces.version}</version>
         </dependency>
         <dependency>
             <groupId>org.primefaces.extensions</groupId>
